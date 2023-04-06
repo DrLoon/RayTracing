@@ -54,6 +54,13 @@ vec3d<T> cross_product(vec3d<T>& vec1, vec3d<T>& vec2) {
 	T k = vec1.x * vec2.y - vec2.x * vec1.y;
 	return vec3d<T>(i, j, k);
 }
+template<typename T>
+vec3d<T> cross_product(vec3d<T>&& vec1, vec3d<T>&& vec2) {
+	T i = vec1.y * vec2.z - vec2.y * vec1.z;
+	T j = vec2.x * vec1.z - vec1.x * vec2.z;
+	T k = vec1.x * vec2.y - vec2.x * vec1.y;
+	return vec3d<T>(i, j, k);
+}
 
 template<typename T>
 std::ostream& operator<<(std::ostream& stream, const vec3d<T>& vec) {
