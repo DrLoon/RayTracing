@@ -1,8 +1,6 @@
 #pragma once
 #include <iostream>
 //#define double float
-#define min(a,b)  (((a) < (b)) ? (a) : (b))
-#define max(a,b)  (((a) > (b)) ? (a) : (b))
 #define PI 3.14159265358979323846
 
 template<typename T>

@@ -33,10 +33,10 @@ public:
                 std::istringstream v(line.substr(2));
                 double x, y, z;
                 v >> x; v >> y; v >> z;
-                max_x = max(max_x, x);
-                min_x = min(min_x, x);
-                max_y = max(max_y, y);
-                min_y = min(min_y, y);
+                max_x = std::max(max_x, x);
+                min_x = std::min(min_x, x);
+                max_y = std::max(max_y, y);
+                min_y = std::min(min_y, y);
 
                 verteces.push_back(vec3d<double>(x, y, z));
             }

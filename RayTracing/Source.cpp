@@ -10,6 +10,7 @@
 #include "Sphere.hpp"
 #include <thread>
 #include "Object.hpp"
+#include <armadillo>
 
 auto convert_to_rad = [](double angle) { return angle * PI / 180.0; };
 
@@ -78,47 +79,6 @@ public:
 		if (!camera.is_orthonormal()) throw("invalid cameraman");
 
 		std::vector<std::vector<olc::Pixel>> res(width);
-
-		
-		//for (int i = 0; i < width; ++i)
-		//{
-		//	res[i].resize(height);
-
-		//	for (int j = 0; j < height; ++j)
-		//	{
-		//		// преобразование к локальным вещественным координатам
-		//		double scr_loc_x = (double)j * coeff_height - scr_size / 2;
-		//		double scr_loc_y = (double)(width - i) * coeff_width - scr_size / 2;
-
-		//		// получение глобальной координаты точки на экране
-		//		vec3d<double> scr_dot = camera.c_point + camera.cs_dist * camera.c_z + scr_loc_x * camera.c_x + scr_loc_y * camera.c_y;
-
-		//		vec3d<double> ray = scr_dot - camera.c_point;
-
-		//		olc::Pixel color = is_floor(camera.c_point, ray) ? olc::WHITE : olc::BLUE;
-		//		for (auto& sph : balls) {
-		//			auto tmp = -1.0 * ray;
-		//			double intense = sph.is_hitted(camera.c_point, tmp);
-		//			if (intense) {
-		//				double col_intense = intense / ((camera.c_point - sph.center).lenght());
-		//				olc::Pixel col_white(255 - (int)(col_intense * 1000) % 255, 255 - (int)(col_intense * 1000) % 255, 255 - (int)(col_intense * 1000) % 255);
-		//				olc::Pixel col_blue(0, 0, 255 - (int)(col_intense * 1000) % 255);
-		//				auto rotatedVec = sph.reflect_lite(intense, camera.c_point, ray);
-		//				color = is_floor(camera.c_point, rotatedVec) ? col_white : col_blue;
-		//			}
-		//		}
-		//		res[i][j] = color;
-		//	}
-		//}
-
-		/*int threads_count = 8;
-		std::vector<std::thread*> pool(threads_count);
-		for (int i = 0; i < pool.size(); ++i) {
-			pool[i] = new std::thread(&Scene::part_makePicture, this, i / threads_count * width, (i + 1) / threads_count * width, height, std::ref(res));
-		}
-		for (auto& th : pool)
-			th->join();*/
-
 
 		//part_makePicture(0, width, height, res);
 		int th_count = 8;
@@ -246,16 +206,16 @@ public:
 	{
 		vec3d<double> ball_center(0, -20, 10);
 		//scene.add_alotof_balls("res_cow.txt");
-		//scene.add_ball(ball_center, 5);
+		scene.add_ball(ball_center, 5);
 		//scene.add_game_object("models/cube.obj");
-		scene.add_game_object("models/cow-nonormals.obj");
+		//scene.add_game_object("models/cow-nonormals.obj");
 		//for(int i = 0; i < 10000; ++i) scene.add_ball(vec3d<double>(10 * i, -10, 20), 2);
 
 		//scene.create_dataset("cube_data.txt");
 	}
 	void print(std::vector<std::vector<olc::Pixel>>& image) {
-		int end1 = min(image.size(), width);
-		int end2 = min(image[0].size(), height);
+		int end1 = std::min((int)image.size(), width);
+		int end2 = std::min((int)image[0].size(), height);
 		for (int i = 0; i < end1; ++i) {
 			for (int j = 0; j < end2; ++j) {
 				Draw(j, i, image[i][j]);
@@ -324,10 +284,11 @@ private:
 
 int main()
 {
+	arma::mat aa(14, 14);
 	vec3d<double> a(0, 0, 15);
 	vec3d<double> b(1, 0, 0);
 	vec3d<double> c(0, 1, 0);
-	vec3d<double> d(0, 0, -1);
+	vec3d<double> d(0, 0, 1);
 	Camera camera(a, b, c, d);
 	Display demo(400, 400, camera);
 	if (demo.Construct(demo.getResolution().second, demo.getResolution().first, 2, 2))

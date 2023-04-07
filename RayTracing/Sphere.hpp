@@ -22,7 +22,7 @@ public:
 		double coeff1 = (-b + sqrt(Discriminant)) / (2 * a);
 		double coeff2 = (-b - sqrt(Discriminant)) / (2 * a);
 		if (coeff1 <= 0 || coeff2 <= 0) return 0;
-		return min(coeff1, coeff2);
+		return std::min(coeff1, coeff2);
 	}
 	vec3d<double> reflect_hit(double coeff, const vec3d<double>& ray_start_point, vec3d<double>& ray) {
 		//vec3d<double> hit_point = ray_start_point + ray * coeff;
