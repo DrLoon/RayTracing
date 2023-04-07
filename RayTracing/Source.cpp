@@ -131,13 +131,11 @@ public:
 					auto tmp = -1.0 * ray;
 					double intense = sph.is_hitted(camera.c_point, tmp);
 					if (intense) {
-						//double col_intense = intense / ((camera.c_point - sph.center).lenght());
-						double col_intense = intense;
+						double col_intense = intense / ((camera.c_point - sph.center).lenght());
 						olc::Pixel col_white(255 - (int)(col_intense * 1000) % 255, 255 - (int)(col_intense * 1000) % 255, 255 - (int)(col_intense * 1000) % 255);
 						olc::Pixel col_blue(0, 0, 255 - (int)(col_intense * 1000) % 255);
-						//auto rotatedVec = sph.reflect_lite(intense, camera.c_point, ray);
-						//color = is_floor(camera.c_point, rotatedVec) ? col_white : col_blue;
-						color = col_blue;
+						auto rotatedVec = sph.reflect_lite(intense, camera.c_point, ray);
+						color = is_floor(camera.c_point, rotatedVec) ? col_white : col_blue;
 					}
 				}
 				for (auto& g_object : g_objects) {
@@ -147,7 +145,6 @@ public:
 					if (intense){
 						olc::Pixel col_green(0, 255 - (int)(intense * 1000) % 255, 0);
 						color = col_green;
-						//color = olc::BLACK;
 					}
 				}
 				
