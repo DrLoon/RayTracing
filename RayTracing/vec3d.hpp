@@ -9,6 +9,7 @@ public:
 	T x, y, z;
 	vec3d(T _x, T _y, T _z) : x(_x), y(_y), z(_z) {}
 	vec3d(const vec3d<T>& in_vec) : x(in_vec.x), y(in_vec.y), z(in_vec.z) {}
+	vec3d() : x(0), y(0), z(0) {}
 	T lenght() {
 		return sqrt(x * x + y * y + z * z);
 	}
@@ -72,6 +73,10 @@ vec3d<T> rotateByAxis(vec3d<T>& axis, vec3d<T>& vec, T angle) {
 	return vec * cos(angle) + cross_product(axis, vec) * sin(angle) + axis * (axis * vec) * (1 - cos(angle));
 }
 
+template<typename T>
+T dist(const vec3d<T>& p1, const vec3d<T>& p2) {
+	return sqrt(std::pow(p1.x - p2.x, 2) + std::pow(p1.y - p2.y, 2) + std::pow(p1.z - p2.z, 2));
+}
 
 template class vec3d<float>;
 template class vec3d<double>;

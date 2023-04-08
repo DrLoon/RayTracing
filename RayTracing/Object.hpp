@@ -5,6 +5,9 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include "Sphere.hpp"
+#include "Ray.hpp"
+#include <limits>
 
 
 class GameObject
@@ -13,7 +16,8 @@ class GameObject
 public:
 	GameObject(std::string filename) {
         parser(filename);
-        std::cout << triagles.size() << ' ' << verteces.size();
+        std::cout << filename << ' ' << triagles.size() << ' ' << verteces.size();
+        sph = construct_sphere();
 	}
     void parser(std::string& filename) {
         double max_x = -10000;
@@ -80,6 +84,8 @@ public:
     double is_hitted(const Ray& inRay) {
         double final_res = 0;
         double last_dist = 10000;
+        if (!sph.is_hitted(inRay.stPoint, inRay.vec))
+            return 0;
         for (auto& tr : triagles) {
             double res = tr.is_hitted(inRay);
             if (res) {
@@ -98,6 +104,35 @@ public:
 private:
 	std::vector<Triangle> triagles;
     std::vector<vec3d<double>> verteces;
+    Sphere sph;
+
+    Sphere construct_sphere() const {
+        vec3d<double> maxX, maxY, maxZ = vec3d<double>(-DBL_MAX, -DBL_MAX, -DBL_MAX);
+        vec3d<double> minX, minY, minZ = vec3d<double>(DBL_MAX, DBL_MAX, DBL_MAX);
+        for (auto& v : verteces) {
+            if (v.x > maxX.x) maxX = v;
+            if (v.y > maxY.y) maxY = v;
+            if (v.z > maxZ.z) maxZ = v;
+            if (v.x < minX.x) minX = v;
+            if (v.y < minY.y) minY = v;
+            if (v.z < minZ.z) minZ = v;
+        }
+        std::vector<vec3d<double>> vec = { maxX, maxY, maxZ, minX, minY, minZ };
+        std::pair<double, std::pair<vec3d<double>, vec3d<double>>> data; // dist and two points of it
+        // find two points with max dist
+        for (auto& v1 : vec) {
+            for (auto& v2 : vec) {
+                double d = dist(v1, v2);
+                if (d > data.first) {
+                    data.first = d;
+                    data.second = { v1, v2 };
+                }
+            }
+        }
+        vec3d<double> center((data.second.first + data.second.second) * 0.5);
+        double radius = dist(center, data.second.first);
+        return Sphere(center, radius);
+    }
 
     int get_int(string& line, string& diff_symbol) {
         string num_s;

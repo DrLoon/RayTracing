@@ -9,6 +9,7 @@ public:
 		center(_center),
 		radius(_radius)
 	{}
+	Sphere() : radius(1) {}
 	double is_hitted(const vec3d<double>& ray_start_point, const vec3d<double>& ray) {
 		vec3d<double> to_center = ray_start_point - center;
 
