@@ -3,15 +3,14 @@
 
 class Camera {
 public:
-	vec3d<double> c_point; // центр
-	vec3d<double> c_x; // координаты вектора
+	vec3d<double> c_point; // center
+	vec3d<double> c_x; // vector coordinates
 	vec3d<double> c_y;
 	vec3d<double> c_z;
-	double cs_dist = 2; // дистанция от камеры до экрана
-	double view_angle = 50; // угол обзора
-	double render_distance = 500; // дальность прорисовки
+	double cs_dist = 2; // distance from camera to screen
+	double view_angle = 50;
+	double render_distance = 500;
 
-	//конструктор
 	Camera(vec3d<double> _c_point, vec3d<double> _c_x, vec3d<double> _c_y, vec3d<double> _c_z)
 		: c_point(_c_point),
 		c_x(_c_x),
@@ -19,7 +18,7 @@ public:
 		c_z(_c_z)
 	{}
 
-	//проверяет всё ли хорошо с камерой
+	// checks if everything is fine with the camera
 	bool is_orthonormal() {
 		if ((c_x.lenght() - 1) > 10e-3 || (c_y.lenght() - 1) > 10e-3 || (c_z.lenght() - 1) > 10e-3) return false;
 		if (abs(c_x * c_y) > 10e-3 || abs(c_x * c_z) > 10e-3 || abs(c_y * c_z) > 10e-3) return false;

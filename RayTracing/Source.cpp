@@ -17,19 +17,19 @@ auto convert_to_rad = [](double angle) { return angle * PI / 180.0; };
 
 class Scene {
 private:
-	//размеры сцены
+	// scene sizes
 	const int width;
 	const int height;
 
-	//длина экрана в пространстве
+	// the length of the screen in space
 	double scr_size;
 
-	// соотношени€ замера диспле€ к его размеру в 3д
+	// the ratio of the measue of the display to its size in 3d
 	double coeff_width;
 	double coeff_height;
 
 
-	//ширина плитки пола (квадрат)
+	// floor tile width (square)
 	double tile_size = 5;
 
 	bool is_floor(vec3d<double>& ray_start_point, vec3d<double>& ray) {
@@ -62,7 +62,6 @@ public:
 	std::vector<Sphere> balls;
 	std::vector<GameObject> g_objects;
 
-	//конструктор
 	Scene(Camera _camera, const int _width, const int _height)
 		: camera(_camera),
 		width(_width),
@@ -73,8 +72,7 @@ public:
 		coeff_height = scr_size / (double)height;
 	}
 
-	//создаЄт картинку котора€ будет передаватьс€ дисплею
-	///(отдать јлексу)
+	// creates an image that will be transmitted to the display
 	std::vector<std::vector<olc::Pixel>> make_picture() {
 		if (!camera.is_orthonormal()) throw("invalid cameraman");
 
@@ -116,11 +114,11 @@ public:
 			inPut[i].resize(height);
 			for (int j = 0; j < height; ++j) {
 
-				// преобразование к локальным вещественным координатам
+				// transformation to local real coordinates
 				double scr_loc_x = (double)j * coeff_height - scr_size / 2;
 				double scr_loc_y = (double)(width - i) * coeff_width - scr_size / 2;
 
-				// получение глобальной координаты точки на экране
+				// getting the global coordinate of a point on the screen
 				vec3d<double> scr_dot = camera.c_point + camera.cs_dist * camera.c_z + scr_loc_x * camera.c_x + scr_loc_y * camera.c_y;
 
 				vec3d<double> ray = scr_dot - camera.c_point;

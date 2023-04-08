@@ -69,7 +69,7 @@ private:
 
 class Triangle {
 public:
-	double intense = 1; // интенсивность в особых случаях теряется после отражений
+	double intense = 1; // intensity in special cases is lost after reflections
 	Triangle(vec3d<double> _Point1, vec3d<double> _Point2, vec3d<double> _Point3) : Point1(_Point1), Point2(_Point2), Point3(_Point3),
 		plane(Point1, Point2, Point3) {
 		vec3d<double> light(1, -1, -2);
@@ -130,9 +130,9 @@ public:
 	}
 	double last_dist = 1000;
 private:
-	vec3d<double> Point1; // точка
-	vec3d<double> Point2; // точка
-	vec3d<double> Point3; // точка
+	vec3d<double> Point1;
+	vec3d<double> Point2;
+	vec3d<double> Point3;
 
 	double color = 1;
 	

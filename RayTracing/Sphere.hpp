@@ -17,7 +17,7 @@ public:
 		double b = -2 * (to_center.x * ray.x + to_center.y * ray.y + to_center.z * ray.z);
 		double c = to_center.x * to_center.x + to_center.y * to_center.y + to_center.z * to_center.z - radius * radius;
 
-		//дискриминант 
+		// discriminant 
 		double Discriminant = b * b - 4 * a * c;
 		if (Discriminant < 0) return 0;
 		double coeff1 = (-b + sqrt(Discriminant)) / (2 * a);
