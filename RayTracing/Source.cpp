@@ -256,7 +256,7 @@ public:
 		previousMousePos = { GetMouseX(), GetMouseY() };
 
 
-		double step = 1;
+		double step = 1.0 * fElapsedTime / 0.02;
 		if (GetKey(olc::Key::W).bHeld) {
 			scene.camera.c_point = scene.camera.c_point + step * scene.camera.c_z;
 		}
