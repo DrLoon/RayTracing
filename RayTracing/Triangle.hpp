@@ -78,10 +78,8 @@ public:
 
 	double is_hitted(const Ray& inRay) {
 		double a = plane.is_meaning(inRay);
-		double h = 0.7;
-		if (plane.get_normal() * inRay.vec > 0) {
-			h = 0.1;
-			return false;
+		if (plane.get_normal() * inRay.vec <= 0) {
+			return 0;
 		}
 		vec3d<double> cross_point = plane.cross_with_line(inRay, a);
 		last_dist = abs((cross_point - inRay.stPoint) * vec3d<double>(1, 1, 1));
@@ -101,16 +99,6 @@ public:
 	{
 		vec3d<double> n = plane.get_normal();
 		double TRIANGLE_EPSILON = 0;
-		//double a = cross_product(Point2 - Point1, pt - Point1) * normal;
-		//double b = cross_product(pt - Point1, Point3 - Point1) * normal;
-		//double c = cross_product(Point2 - pt, Point3 - pt) * normal;
-		////double a = cross_product(pt - Point1, pt - Point2) * normal;
-		////double b = cross_product(pt - Point1, pt - Point3) * normal;
-		////double c = cross_product(pt - Point2, pt - Point3) * normal;
-
-		//if (sign(a) == sign(b) && sign(b) == sign(c))
-		//	return true;
-
 		if (cross_product(Point2 - Point1, pt - Point1) * n < TRIANGLE_EPSILON)
 			return false;
 		if (cross_product(pt - Point1, Point3 - Point1) * n < TRIANGLE_EPSILON)

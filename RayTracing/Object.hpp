@@ -93,7 +93,6 @@ public:
                 if (last_dist > tr.last_dist){
                     final_res = res;
                     last_dist = tr.last_dist;
-                    final_res = last_dist;
                 }
                     
             }
