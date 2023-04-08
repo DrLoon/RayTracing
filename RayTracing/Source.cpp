@@ -206,7 +206,14 @@ public:
 		scene.add_ball(ball_center, 5);
 		//scene.add_game_object("models/cube.obj");
 		//scene.add_game_object("models/cow-nonormals.obj");
-		scene.add_game_object("models/chess_simplest/ImageToStl.com_knight.obj");
+
+		scene.add_game_object("models/chess_simplest/knight.obj");
+		//scene.add_game_object("models/chess_simplest/pawn.obj");
+		//scene.add_game_object("models/chess_simplest/bishop.obj");
+		//scene.add_game_object("models/chess_simplest/king.obj");
+		//scene.add_game_object("models/chess_simplest/queen.obj");
+		//scene.add_game_object("models/chess_simplest/rook.obj");
+		
 		//for(int i = 0; i < 10000; ++i) scene.add_ball(vec3d<double>(10 * i, -10, 20), 2);
 
 		//scene.create_dataset("cube_data.txt");
