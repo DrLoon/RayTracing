@@ -32,8 +32,7 @@ private:
 	// floor tile width (square)
 	double tile_size = 5;
 
-	//������ �������
-	int threads_number = 10;
+	int threads_number = 4;
 	std::vector<std::thread> thread_s;
 	std::vector<int> is_done;
 	std::mutex mut_dist;
@@ -42,7 +41,6 @@ private:
 	std::condition_variable cv;
 	bool life_time_finished = false;
 
-	//����� 
 	std::vector<std::vector<olc::Pixel>> res_image;
 	
 
@@ -85,11 +83,10 @@ public:
 		coeff_width = scr_size / (double)width;
 		coeff_height = scr_size / (double)height;
 
-		//������ ������ ��������
 		res_image.resize(width);
 		for (auto& i : res_image) i.resize(height); 
 		is_done.resize(width, 1);
-		//������ ������ 
+
 		thread_s.resize(threads_number);
 		for (int i = 0; i < threads_number; ++i)
 			thread_s[i] = std::thread(&Scene::distributed_exe_f, this, std::ref(res_image), std::ref(is_done));
@@ -104,7 +101,6 @@ public:
 		for (auto& i : thread_s) i.join();
 	}
 
-	//��� ������� 
 	void distributed_exe_f(std::vector<std::vector<olc::Pixel>>& res_image, std::vector<int>& isDone) {
 		for (int i = 0; i < res_image.size(); ++i) {
 			mut_dist.lock();
@@ -127,13 +123,10 @@ public:
 		}
 	}
 
-	//����������� ����
 	olc::Pixel culcelate_ray(int i, int j) {
-		// �������������� � ��������� ������������ �����������
 		double scr_loc_x = (double)j * coeff_height - scr_size / 2;
 		double scr_loc_y = (double)(width - i) * coeff_width - scr_size / 2;
 
-		// ��������� ���������� ���������� ����� �� ������
 		vec3d<double> scr_dot = camera.c_point + camera.cs_dist * camera.c_z + scr_loc_x * camera.c_x + scr_loc_y * camera.c_y;
 
 		vec3d<double> ray = scr_dot - camera.c_point;
