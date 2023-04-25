@@ -10,7 +10,7 @@ public:
 	vec3d(T _x, T _y, T _z) : x(_x), y(_y), z(_z) {}
 	vec3d(const vec3d<T>& in_vec) : x(in_vec.x), y(in_vec.y), z(in_vec.z) {}
 	vec3d() : x(0), y(0), z(0) {}
-	T lenght() {
+	T lenght() const {
 		return sqrt(x * x + y * y + z * z);
 	}
 	void normalize() {
@@ -47,7 +47,7 @@ vec3d<T> operator- (const vec3d<T>& vec1, const vec3d<T>& vec2) {
 }
 
 template<typename T>
-vec3d<T> cross_product(vec3d<T>& vec1, vec3d<T>& vec2) {
+vec3d<T> cross_product(const vec3d<T>& vec1, const vec3d<T>& vec2) {
 	T i = vec1.y * vec2.z - vec2.y * vec1.z;
 	T j = vec2.x * vec1.z - vec1.x * vec2.z;
 	T k = vec1.x * vec2.y - vec2.x * vec1.y;
