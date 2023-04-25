@@ -1,5 +1,6 @@
 #pragma once
 #include "vec3d.hpp"
+#include "Ray.hpp"
 
 class Sphere {
 public:
@@ -10,6 +11,10 @@ public:
 		radius(_radius)
 	{}
 	Sphere() : radius(1) {}
+	void operator=(const Sphere& C) {
+		radius = C.radius;
+		center = C.center;
+	}
 	double is_hitted(const vec3d<double>& ray_start_point, const vec3d<double>& ray) {
 		vec3d<double> to_center = ray_start_point - center;
 
@@ -24,6 +29,12 @@ public:
 		double coeff2 = (-b - sqrt(Discriminant)) / (2 * a);
 		if (coeff1 <= 0 || coeff2 <= 0) return 0;
 		return std::min(coeff1, coeff2);
+	}
+
+	bool is_hitted_lite(const Ray& ray) const {
+		vec3d<double> to_center = ray.stPoint - center;
+		double d = cross_product(to_center, ray.vec).lenght() / ray.vec.lenght();
+		return d <= radius;
 	}
 	vec3d<double> reflect_hit(double coeff, const vec3d<double>& ray_start_point, vec3d<double>& ray) {
 		//vec3d<double> hit_point = ray_start_point + ray * coeff;
