@@ -33,6 +33,7 @@ public:
 
 	bool is_hitted_lite(const Ray& ray) const {
 		vec3d<double> to_center = ray.stPoint - center;
+		if (to_center * ray.vec <= 0) return false;
 		double d = cross_product(to_center, ray.vec).lenght() / ray.vec.lenght();
 		return d <= radius;
 	}
