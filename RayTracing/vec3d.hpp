@@ -15,10 +15,13 @@ public:
 	}
 	void normalize() {
 		T len = this->lenght();
-		if (!len) throw("ded already inside");
 		x /= len;
 		y /= len;
 		z /= len;
+	}
+	vec3d<double> normalize() const {
+		T len = this->lenght();
+		return vec3d<double>(x / len, y / len, z / len);
 	}
 };
 
@@ -26,7 +29,6 @@ template<typename T>
 T operator* (const vec3d<T>& vec1, const vec3d<T>& vec2) {
 	return vec1.x * vec2.x + vec1.y * vec2.y + vec1.z * vec2.z;
 }
-
 template<typename T>
 vec3d<T> operator* (const T scalar, const vec3d<T>& vec) {
 	return vec3d<T>(scalar * vec.x, scalar * vec.y, scalar * vec.z);
@@ -34,6 +36,11 @@ vec3d<T> operator* (const T scalar, const vec3d<T>& vec) {
 template<typename T>
 vec3d<T> operator* (const vec3d<T>& vec, const T scalar) {
 	return vec3d<T>(scalar * vec.x, scalar * vec.y, scalar * vec.z);
+}
+
+template<typename T>
+vec3d<T> operator/ (const vec3d<T>& vec, const T scalar) {
+	return vec * (1.0 / scalar);
 }
 
 template<typename T>
@@ -54,7 +61,7 @@ vec3d<T> cross_product(const vec3d<T>& vec1, const vec3d<T>& vec2) {
 	return vec3d<T>(i, j, k);
 }
 template<typename T>
-vec3d<T> cross_product(vec3d<T>&& vec1, vec3d<T>&& vec2) {
+vec3d<T> cross_product(const vec3d<T>&& vec1, const vec3d<T>&& vec2) {
 	T i = vec1.y * vec2.z - vec2.y * vec1.z;
 	T j = vec2.x * vec1.z - vec1.x * vec2.z;
 	T k = vec1.x * vec2.y - vec2.x * vec1.y;
@@ -68,9 +75,15 @@ std::ostream& operator<<(std::ostream& stream, const vec3d<T>& vec) {
 }
 
 template<typename T>
-vec3d<T> rotateByAxis(vec3d<T>& axis, vec3d<T>& vec, T angle) {
+vec3d<T> rotateByAxis(vec3d<T>& axis, const vec3d<T>& vec, const T angle) {
+	// changes axis, not const function!
 	axis.normalize();
 	return vec * cos(angle) + cross_product(axis, vec) * sin(angle) + axis * (axis * vec) * (1 - cos(angle));
+}
+template<typename T>
+vec3d<T> rotateByAxis(const vec3d<T>& axis, const vec3d<T>& vec, const T angle) {
+	vec3d<T> n = axis.normalize();
+	return vec * cos(angle) + cross_product(n, vec) * sin(angle) + n * (n * vec) * (1 - cos(angle));
 }
 
 template<typename T>

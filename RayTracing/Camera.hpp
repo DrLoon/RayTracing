@@ -1,6 +1,7 @@
 #pragma once
 #include "vec3d.hpp"
 
+
 class Camera {
 public:
 	vec3d<double> c_point; // center

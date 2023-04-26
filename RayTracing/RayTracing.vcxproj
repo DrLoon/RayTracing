@@ -157,11 +157,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Camera.hpp" />
+    <ClInclude Include="Display.hpp" />
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="olcPixelGameEngine.h" />
     <ClInclude Include="Ray.hpp" />
+    <ClInclude Include="Scene.hpp" />
     <ClInclude Include="Sphere.hpp" />
     <ClInclude Include="Triangle.hpp" />
+    <ClInclude Include="utils.hpp" />
     <ClInclude Include="vec3d.hpp" />
   </ItemGroup>
   <ItemGroup>
