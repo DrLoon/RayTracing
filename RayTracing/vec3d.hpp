@@ -91,5 +91,13 @@ T dist(const vec3d<T>& p1, const vec3d<T>& p2) {
 	return sqrt(std::pow(p1.x - p2.x, 2) + std::pow(p1.y - p2.y, 2) + std::pow(p1.z - p2.z, 2));
 }
 
+template<typename T>
+vec3d<T> ROTATE(const vec3d<T>& vec, const double a, const double b, const double g) {
+	const T x = vec.x * cos(b) * cos(g) - vec.y * sin(g) * cos(b) + vec.z * sin(b);
+	const T y = vec.x * (sin(a) * sin(b) * cos(g) + sin(g) * cos(a)) + vec.y * (-sin(a) * sin(b) * sin(g) + cos(a) * cos(g)) - vec.z * sin(a) * cos(b);
+	const T z = vec.x * (sin(a) * sin(g) - sin(b) * cos(a) * cos(g)) + vec.y * (sin(a) * cos(g) + sin(b) * sin(g) * cos(a)) + vec.z * cos(a) * cos(b);
+	return vec3d<T>(x, y, z);
+}
+
 template class vec3d<float>;
 template class vec3d<double>;

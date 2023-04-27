@@ -127,12 +127,16 @@ public:
 		return cross_product((Point2 - Point1), (Point3 - Point1));
 	}
 
+	std::tuple<vec3d<double>, vec3d<double>, vec3d<double>> get_points() const {
+		return { Point1 , Point2 , Point3 };
+	}
+
 private:
-	const vec3d<double> Point1;
-	const vec3d<double> Point2;
-	const vec3d<double> Point3;
+	vec3d<double> Point1;
+	vec3d<double> Point2;
+	vec3d<double> Point3;
 
 	double color = 1;
 	
-	const Plane plane;
+	Plane plane;
 };

@@ -41,6 +41,48 @@ public:
         return final_res;
     }
 
+    void rotate(const double a, const double b, const double g) {
+        vec3d<double> center = sph.center;
+        for (auto& v : verteces) {
+            v = ROTATE(v - center, a, b, g) + center;
+        }
+        for (auto& t : triagles) {
+            auto[p1, p2, p3] = t.get_points();
+            t = Triangle(
+                ROTATE(p1 - center, a, b, g) + center,
+                ROTATE(p2 - center, a, b, g) + center,
+                ROTATE(p3 - center, a, b, g) + center
+            );
+        }
+    }
+
+    void scale(const double n) {
+        vec3d<double> center = sph.center;
+        for (auto& v : verteces) {
+            v = (v - center) * n + center;
+        }
+        for (auto& t : triagles) {
+            auto [p1, p2, p3] = t.get_points();
+            t = Triangle(
+                (p1 - center) * n + center,
+                (p2 - center) * n + center,
+                (p3 - center) * n + center
+            );
+        }
+        sph.radius *= n;
+    }
+
+    void move(const vec3d<double>& m_vec) {
+        for (auto& v : verteces) {
+            v = v + m_vec;
+        }
+        for (auto& t : triagles) {
+            auto [p1, p2, p3] = t.get_points();
+            t = Triangle(p1 + m_vec, p2 + m_vec, p3 + m_vec);
+        }
+        sph.center = sph.center + m_vec;
+    }
+
 private:
 	std::vector<Triangle> triagles;
     std::vector<vec3d<double>> verteces;
