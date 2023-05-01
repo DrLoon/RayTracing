@@ -101,7 +101,11 @@ public:
 	}
 
 	bool isInside_flat(const vec3d<double>& pt) const {
-		if ((Point1.x == Point2.x && Point2.x == Point3.x) || ((Point1.y == Point2.y && Point2.y == Point3.y)))
+		if (
+			(Point1.x == Point2.x && Point2.x == Point3.x)
+			||
+			!(Point1.y == Point2.y && Point2.y == Point3.y)
+		)
 			return isInsideTriangle(pt);
 		auto a = (Point1.x - pt.x) * (Point2.y - Point1.y) - (Point2.x - Point1.x) * (Point1.y - pt.y);
 		auto b = (Point2.x - pt.x) * (Point3.y - Point2.y) - (Point3.x - Point2.x) * (Point2.y - pt.y);
